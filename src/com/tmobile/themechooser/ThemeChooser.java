@@ -166,7 +166,7 @@ public class ThemeChooser extends Activity {
                     (position + 1), mAdapter.getCount()));
             String text = item.getName();
             if (mAdapter.getMarkedPosition() == position) {
-                text += " (current)";
+                text = getString(R.string.theme_current, text);
             }
             mThemeNameView.setText(text);
         }
