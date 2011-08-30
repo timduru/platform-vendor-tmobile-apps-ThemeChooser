@@ -32,10 +32,14 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Gallery;
@@ -56,6 +60,8 @@ public class ThemeChooser extends Activity {
     private static final int DIALOG_MISSING_HOST_DENSITY = 1;
     private static final int DIALOG_MISSING_THEME_PACKAGE_SCOPE = 2;
     private final ChangeThemeHelper mChangeHelper = new ChangeThemeHelper(this, DIALOG_APPLY);
+
+    private final int MENU_UNINSTALL = 0;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -80,7 +86,7 @@ public class ThemeChooser extends Activity {
         mGallery = (Gallery)findViewById(R.id.gallery);
         mGallery.setAdapter(mAdapter);
         mGallery.setOnItemSelectedListener(mItemSelected);
-
+        mGallery.setOnCreateContextMenuListener(mContextMenu);
         Button button = (Button)findViewById(R.id.apply);
         button.setOnClickListener(mApplyClicked);
     }
@@ -174,6 +180,31 @@ public class ThemeChooser extends Activity {
         public void onNothingSelected(AdapterView<?> parent) {
         }
     };
+
+    private final OnCreateContextMenuListener mContextMenu = new OnCreateContextMenuListener() {
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v,
+                ContextMenuInfo menuInfo) {
+                menu.setHeaderTitle(R.string.menu_header);
+                menu.add(0, MENU_UNINSTALL,Menu.NONE,R.string.menu_uninstall);
+        }
+    };
+
+    public boolean onContextItemSelected(android.view.MenuItem item) {
+        int selectedPos = mGallery.getSelectedItemPosition();
+        ThemeItem themeItem = (ThemeItem)mGallery.getItemAtPosition(selectedPos);
+        switch(item.getItemId())
+        {
+        case MENU_UNINSTALL:
+            Intent uninstallIntent = new Intent(Intent.ACTION_DELETE);
+            uninstallIntent.setData(Uri.parse("package:" + themeItem.getPackageName()));
+            uninstallIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    | Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(uninstallIntent);
+            break;
+        }
+        return true;
+    }
 
     private final OnClickListener mApplyClicked = new OnClickListener() {
         public void onClick(View v) {
