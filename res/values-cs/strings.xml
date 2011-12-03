@@ -28,8 +28,8 @@
     <string name="item_count">%1$d/%2$d</string>
 
     <string name="dialog_theme_error_title">Chyba tématu</string>
-    <string name="dialog_missing_host_density_msg">Pardon, v tomto tématu schází prostředy pro velikost obrazovky vašeho zařízení.</string>
+    <string name="dialog_missing_host_density_msg">Upozornění - v tomto tématu schází prostředy pro velikost obrazovky vašeho zařízení!</string>
     <string name="dialog_missing_theme_package_scope_msg">Toto téma nebylo správně vytvořeno a proto nemůže být použito. Prosím kontaktujte autora tématu.</string>
     <string name="dialog_apply_anyway_btn">Přesto použít</string>
-    <string name="dialog_bummer_btn">Průšvih</string>
+    <string name="dialog_bummer_btn">Ne ne ne!</string>
 </resources>
