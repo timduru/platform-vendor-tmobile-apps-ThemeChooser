@@ -125,7 +125,7 @@ public class ChangeThemeHelper {
 
             // Kill the current Home process, they tend to be evil and cache drawable references in all apps
             final ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-            am.forceStopPackage("com.android.launcher");
+            am.forceStopPackage("com.cyanogenmod.trebuchet");
             mHandler.scheduleFinish("Theme change 'complete', closing!");
         }
     };
