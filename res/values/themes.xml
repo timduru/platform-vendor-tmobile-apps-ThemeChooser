@@ -16,7 +16,7 @@
  -->
 
 <resources>
-    <style name="Chooser" parent="android:style/Theme.NoTitleBar">
+    <style name="Chooser" parent="android:style/Theme.Holo.NoActionBar">
         <item name="android:windowBackground">@drawable/chooser_bg</item>
     </style>
 </resources>
