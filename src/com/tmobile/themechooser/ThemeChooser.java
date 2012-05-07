@@ -40,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Gallery;
@@ -191,7 +192,7 @@ public class ThemeChooser extends Activity {
     };
 
     public boolean onContextItemSelected(android.view.MenuItem item) {
-        int selectedPos = mGallery.getSelectedItemPosition();
+        int selectedPos = ((AdapterContextMenuInfo) item.getMenuInfo()).position;
         ThemeItem themeItem = (ThemeItem)mGallery.getItemAtPosition(selectedPos);
         switch(item.getItemId())
         {
