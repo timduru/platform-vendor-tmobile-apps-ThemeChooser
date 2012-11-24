@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.IntentFilter.MalformedMimeTypeException;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.CustomTheme;
 import android.content.res.Resources;
@@ -124,8 +125,13 @@ public class ChangeThemeHelper {
         public void onReceive(Context context, Intent intent) {
 
             // Kill the current Home process, they tend to be evil and cache drawable references in all apps
+        	// common guys, why just include trebuchet? Let's be fair and kill any default launcher!
             final ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-            am.forceStopPackage("com.cyanogenmod.trebuchet");
+            Intent i = new Intent(Intent.ACTION_MAIN);
+            i.addCategory(Intent.CATEGORY_HOME);
+            ResolveInfo resolveInfo = mContext.getPackageManager().resolveActivity(i,
+                    PackageManager.MATCH_DEFAULT_ONLY);
+            am.forceStopPackage(resolveInfo.activityInfo.packageName);
             mHandler.scheduleFinish("Theme change 'complete', closing!");
         }
     };
